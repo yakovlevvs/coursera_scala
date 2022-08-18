@@ -77,5 +77,59 @@ class FunSetSuite extends munit.FunSuite:
       assert(!contains(s6, 3), "Union 3")
   }
 
+  test("diff") {
+    new TestSets :
+      val s4 = union(s1, s2)
+      val s5 = union(s3, s2)
+      val s6 = diff(s4, s5)
+      assert(!contains(s6, 2), "Union 2")
+      assert(contains(s6, 1), "Union 3")
+  }
+
+  test("filter") {
+    new TestSets :
+      def p(x: Int): Boolean = x < 3
+      val s4 = singletonSet(4)
+      val s5 = singletonSet(5)
+      val s6 = union(s1, union(s2, union(s3, union(s4, s5))))
+      assert(contains(filter(s6, p), 2), "Union 2")
+      assert(!contains(filter(s6, p), 3), "Union 3")
+  }
+
+  test("forall") {
+    new TestSets :
+      def p1(x: Int): Boolean = x < 3
+      def p2(x: Int): Boolean = x < 6
+      val s4 = singletonSet(4)
+      val s5 = singletonSet(5)
+      val s6 = union(s1, union(s2, union(s3, union(s4, s5))))
+      assert(!forall(s6, p1), "all elements are less then 3")
+      assert(forall(s6, p2), "all elements are less then 6")
+  }
+
+  test("exists") {
+    new TestSets :
+      def p1(x: Int): Boolean = x < 3
+
+      def p2(x: Int): Boolean = x > 6
+
+      val s4 = singletonSet(4)
+      val s5 = singletonSet(5)
+      val s6 = union(s1, union(s2, union(s3, union(s4, s5))))
+      assert(exists(s6, p1), "all elements are less then 3")
+      assert(!exists(s6, p2), "all elements are less then 6")
+  }
+
+  test("map") {
+    new TestSets :
+      def f(x: Int): Int = x * x
+
+      val s4 = singletonSet(4)
+      val s5 = singletonSet(5)
+      val s6 = union(s1, union(s2, union(s3, union(s4, s5))))
+      assert(contains(map(s6, f), 25), "all elements are less then 3")
+      assert(!contains(map(s6, f), 5), "all elements are less then 6")
+  }
+
   import scala.concurrent.duration.*
   override val munitTimeout = 10.seconds
