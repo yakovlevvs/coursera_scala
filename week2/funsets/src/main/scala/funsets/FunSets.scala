@@ -28,13 +28,23 @@ trait FunSets extends FunSetsInterface:
    * Returns the union of the two given sets,
    * the sets of all elements that are in either `s` or `t`.
    */
-  def union(s: FunSet, t: FunSet): FunSet = ???
+  def union(s: FunSet, t: FunSet): FunSet = {
+    def fun(elem: Int): Boolean = {
+      s(elem) || t(elem)
+    }
+    fun
+  }
 
   /**
    * Returns the intersection of the two given sets,
    * the set of all elements that are both in `s` and `t`.
    */
-  def intersect(s: FunSet, t: FunSet): FunSet = ???
+  def intersect(s: FunSet, t: FunSet): FunSet = {
+    def fun(elem: Int): Boolean = {
+      s(elem) && t(elem)
+    }
+    fun
+  }
 
   /**
    * Returns the difference of the two given sets,

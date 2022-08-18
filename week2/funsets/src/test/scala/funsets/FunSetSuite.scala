@@ -68,7 +68,14 @@ class FunSetSuite extends munit.FunSuite:
       assert(!contains(s, 3), "Union 3")
   }
 
-
+  test("intersection contains in both sets") {
+    new TestSets :
+      val s4 = union(s1, s2)
+      val s5 = union(s3, s2)
+      val s6 = intersect(s4, s5)
+      assert(contains(s6, 2), "Union 2")
+      assert(!contains(s6, 3), "Union 3")
+  }
 
   import scala.concurrent.duration.*
   override val munitTimeout = 10.seconds
